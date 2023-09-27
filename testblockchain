@@ -1,0 +1,23 @@
+import { AptosSDK, Client } from 'aptos-ts-sdk';
+
+const rpcUrl = 'https://g.w.lavanet.xyz:443/gateway/apt1/rest/8178cbf32f43733586a374e1177dfa99';
+
+const main = async () => {
+  const aptos = new AptosSDK({
+    nodeUrl: rpcUrl,
+    doNotFixNodeUrl: true,
+  });
+
+  const client = new Client(aptos);
+
+  let validRequests = 0;
+  let errors = 0;
+
+  for (let i = 0; i < 100; i++) {
+    try {
+      const accountResources = await client.getAccountResources('8178cbf32f43733586a374e1177dfa99');
+      console.log(`Request ${i + 1}: Success`);
+      // Log relevant response data if needed
+      // console.log(`Response:`, accountResources);
+      validRequests++;
+    } catch (error) {
